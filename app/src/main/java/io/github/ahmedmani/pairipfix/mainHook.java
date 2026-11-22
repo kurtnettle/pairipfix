@@ -22,8 +22,8 @@ public class mainHook implements IXposedHookLoadPackage {
 
         Class<?> clazz = XposedHelpers.findClassIfExists("com.pairip.VMRunner", lpparam.classLoader);
         if (clazz == null) {
-            XposedBridge.log("[PairIPFix] App with package name " + lpparam.packageName + " does not have Pairip protection, or protection is not recognized, exiting.");
-            return;
+            XposedBridge.log("[PairIPFix] App with package name " + lpparam.packageName + " does not have Pairip protection, or protection is not recognized, continuing anyway...");
+//            return;
         }
 
         List<BaseHook> hooks = Arrays.asList(
