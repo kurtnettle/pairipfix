@@ -1,42 +1,63 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "io.github.ahmedmani.io.github.ahmedmani.pairipfixio.github.ahmedmani.pairipfix"
-    compileSdk = 34
+    namespace = "io.github.ahmedmani.pairipfix"
+    compileSdk = 37
 
     defaultConfig {
-        applicationId = "io.github.ahmedmani.io.github.ahmedmani.pairipfixio.github.ahmedmani.pairipfix"
+        applicationId = "io.github.ahmedmani.pairipfix"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
+        versionCode = 3
+        versionName = "2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
-dependencies {
+kotlin {
+    jvmToolchain(17)
+}
 
+dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    compileOnly("de.robv.android.xposed:api:82")
+
+    platform(libs.yukihook.bom).apply {
+        implementation(this)
+        ksp(this)
+    }
+
+    ksp(libs.yukihook.compiler)
+    implementation(libs.kavaref.extension)
+    implementation(libs.yukihook.core)
+    implementation(libs.yukihook.extension.kavaref)
+
+    compileOnly(libs.libxposed.api)
+    implementation(libs.yukihook.runtime.libxposed)
 }

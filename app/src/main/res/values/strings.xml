@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">pairipfix</string>
+    <string name="module_description">LSPosed module to bypass Pairipcore APK checks</string>
 </resources>
